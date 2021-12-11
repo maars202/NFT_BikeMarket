@@ -31,5 +31,5 @@ You can view the website on your computer and even interact with it by using met
 
 <img src="ezgif-2-46d34f5c214b.gif" width="600" height="350"/>
 
-<img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/>
+<!-- <img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/> -->
 
