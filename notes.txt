@@ -1,0 +1,6 @@
+https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb
+
+
+https://hardhat.org/guides/deploying.html
+npx hardhat node
+npx hardhat run --network <your-network> scripts/deploy.js
