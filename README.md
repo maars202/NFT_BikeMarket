@@ -9,6 +9,8 @@ In the project directory, you can run:
 
 npx hardhat node 
 
+take note of the private key in your localhost addresses and place it in the hardhat.config.js file as PRIVATE_KEY.
+
 deploy the first marketplace contract using:
 
 npx hardhat run --network localhost scripts/nftMarketDeploy.js 
@@ -28,3 +30,6 @@ You can view the website on your computer and even interact with it by using met
 
 
 <img src="ezgif-2-46d34f5c214b.gif" width="600" height="350"/>
+
+<!-- <img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/> -->
+
