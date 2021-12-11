@@ -103,7 +103,7 @@ describe.skip("NFT", function () {
 });
 
 /* test/sample-test.js */
-describe("NFTMarket", function() {
+describe.skip("NFTMarket", function() {
   let nft
   let market
   let Owner
@@ -182,6 +182,7 @@ describe("NFTMarket", function() {
   })
 
   it("relisting item", async function(){
+    
     let original = await nft.ownerOf(1)
     console.log("original: ", original === Alice.address)
     let listingPrice = await market.getListingPrice()
@@ -201,7 +202,7 @@ describe("NFTMarket", function() {
 
 
 /* test/sample-test.js */
-describe.skip("NFTMarket regversion", function () {
+describe("NFTMarket regversion", function () {
   let nft;
   let market;
   let Owner;
@@ -289,8 +290,7 @@ describe.skip("NFTMarket regversion", function () {
 
     // let listingPrice = await market.getListingPrice()
     // listingPrice = listingPrice.toString()
-    await nft.approveTo(Alice.address, 1)
-    await market.connect(Alice).relistMarketItem(nftContractAddress, 1, {
+    market.connect(Alice).relistMarketItem(nftContractAddress, 1, {
       value: listingPrice,
     });
     // relistMarketItem(

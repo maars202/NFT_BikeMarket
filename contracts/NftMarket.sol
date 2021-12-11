@@ -94,6 +94,9 @@ contract NFTMarket is ReentrancyGuard {
     require(msg.value == listingPrice, "Price must be equal to listing price");
     
     // IERC721(nftContract).approveTo(payable(address(0)), tokenId);
+    // IERC721(nftContract).approveTo(payable(msg.sender), tokenId);
+
+    // NFT myNft = NFT(nftContract)
     IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
 
     idToMarketItem[itemId].owner = payable(address(0));
