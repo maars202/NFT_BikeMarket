@@ -103,7 +103,7 @@ describe.skip("NFT", function () {
 });
 
 /* test/sample-test.js */
-describe("NFTMarket", function() {
+describe.skip("NFTMarket", function() {
   let nft
   let market
   let Owner
@@ -201,7 +201,7 @@ describe("NFTMarket", function() {
 
 
 /* test/sample-test.js */
-describe.skip("NFTMarket regversion", function () {
+describe("NFTMarket regversion", function () {
   let nft;
   let market;
   let Owner;
