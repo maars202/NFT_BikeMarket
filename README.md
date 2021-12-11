@@ -9,6 +9,8 @@ In the project directory, you can run:
 
 npx hardhat node 
 
+take note of the private key in your localhost addresses and place it in the hardhat.config.js file as PRIVATE_KEY.
+
 deploy the first marketplace contract using:
 
 npx hardhat run --network localhost scripts/nftMarketDeploy.js 
