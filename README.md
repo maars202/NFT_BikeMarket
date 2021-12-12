@@ -29,7 +29,13 @@ npm start
 You can view the website on your computer and even interact with it by using metamask chrome extension to list your own nfts! Yay!
 
 
-<img src="ezgif-2-46d34f5c214b.gif" width="600" height="350"/>
+
+### Uploading and minting NFT artwork to place on marketplace:
+<img src="creatingnft.gif" width="600" height="350"/>
+
+### Buying NFT as a different user (with a different address):
+<img src="buyingNftFromDifferentAccount.gif" width="600" height="350"/>
+
 
 <!-- <img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/> -->
 
