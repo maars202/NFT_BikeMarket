@@ -32,7 +32,8 @@ import Button from '@mui/material/Button';
 import Card from "./components/Card"
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import Masonry from '@mui/lab/Masonry';
+// import Masonry from '@mui/lab/Masonry';
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 
 import { Form, Input, Button as Button2, Radio } from 'antd';
@@ -447,6 +448,7 @@ class App extends Component {
 
   render() {
     return (
+      <div style={styles.biggerContainer}>
       <div className="container" style={styles.container}>
         <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -462,6 +464,9 @@ class App extends Component {
         </div>
         
         <Box sx={{ minHeight: 393 }}>
+        <ResponsiveMasonry
+                columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
+            >
         <Masonry columns={3} spacing={1}>
         {this.state.marketitems.map((item, index) => {
           if (!item.sold){
@@ -482,6 +487,7 @@ class App extends Component {
         }
         })}
       </Masonry>
+      </ResponsiveMasonry>
       </Box>
       <div style={{display: "flex", justifyContent: "left", alignItems: "center"}}>
          <NFTnumIcon nftcount={this.state.mynfts.length}/><p>My NFTS:</p>
@@ -489,6 +495,9 @@ class App extends Component {
         </div>
 
       <Box sx={{ minHeight: 393 }}>
+      <ResponsiveMasonry
+                columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
+            >
         <Masonry columns={4} spacing={1}>
         {this.state.mynfts.map((item, index) => {
         return(
@@ -513,6 +522,7 @@ class App extends Component {
           
         )})}
       </Masonry>
+      </ResponsiveMasonry>
       </Box>
 
 
@@ -521,8 +531,11 @@ class App extends Component {
         
         </div>
 
-      <Box sx={{ minHeight: 393 }}>
-        <Masonry columns={4} spacing={1}>
+      <Box sx={{ minHeight: 393}}>
+      <ResponsiveMasonry
+                columnsCountBreakPoints={{350: 1, 750: 2, 900: 3}}
+            >
+        <Masonry columns={5} spacing={1}>
         {this.state.creations.map((item, index) => {
           // if (!item.sold){
         return(
@@ -537,13 +550,14 @@ class App extends Component {
 
         })}
       </Masonry>
+      </ResponsiveMasonry>
       </Box>
 
 
 
   
 
-
+        <div>
       <form onSubmit={this.createMarket} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
         <label style={{marginBottom: "10px"}}>
             Select Image:
@@ -564,8 +578,9 @@ class App extends Component {
           Price:
           <input type="number" min="0" step="0.00001" onChange={e => this.setState({newprice: e.target.value })} />
         </label>
-        <input type="submit" value="Submit" />
+        <input style={{width: 200}} type="submit" value="Submit" />
       </form>
+      </div>
 
 
       <div>
@@ -577,11 +592,11 @@ class App extends Component {
     <h3>description: {this.state.newdescription}</h3>
     {/* newimage: {this.state.newurl.toString()} */}
     <h3>price: {this.state.newprice}</h3>
-
-
+    </div>
+    <div>
 
           { this.state.previewurl != null ? 
-          (<div>
+          (<div style={{maxHeight: "100"}}>
             <Card url={this.state.previewurl} item={{idx: 1}}/> 
           </div>) : 
           <div>No image selected</div>
@@ -590,6 +605,7 @@ class App extends Component {
         </div>
       </div>
       
+      </div>
       </div>
     );
   }
@@ -600,10 +616,19 @@ export default App;
 
 
 const styles={
+  biggerContainer: {
+ backgroundImage: "url(" + "data:image/jpeg;base64,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" + ")",
+    backgroundSize: 'cover',
+            overflow: 'hidden',
+  },
   container: {
     margin: "50px",
+    color: "white", 
     // backgroundColor: "grey",
-    backgroundImage: "url(" + "" + ")",
-    color: "black"
+    // backgroundImage: "url(" + "data:image/jpeg;base64,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" + ")",
+    // backgroundSize: 'cover',
+    //         overflow: 'hidden',
+    color: "black",
+    // background: "linear-gradient(#3494E6, #EC6EAD);" 
 
 }}

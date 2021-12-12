@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const { ethers, network } = require("hardhat");
 
 describe.skip("Greeter", function () {
   it("Should return the new greeting once it's changed", async function () {
@@ -211,6 +211,7 @@ describe("NFTMarket regversion", function () {
   let listingPrice;
   let auctionPrice;
   let nftContractAddress;
+  let marketAddress
 
   beforeEach(async function () {
     const [owner, alice, bob, caleb] = await ethers.getSigners();
@@ -224,7 +225,7 @@ describe("NFTMarket regversion", function () {
     const Market = await ethers.getContractFactory("NFTMarket");
     market = await Market.deploy();
     await market.deployed();
-    const marketAddress = market.address;
+    marketAddress = market.address;
 
     /* deploy the NFT contract */
     const NFT = await ethers.getContractFactory("NFT");
@@ -237,18 +238,27 @@ describe("NFTMarket regversion", function () {
     /* create two tokens */
     await nft.createToken("https://www.mytokenlocation.com")
     await nft.createToken("https://www.mytokenlocation2.com")
+    await nft.createToken("https://www.mytokenlocation3.com")
     listingPrice = await market.getListingPrice()
     console.log("listingPrice", listingPrice,"auctionPrice",  auctionPrice)
     /* put both tokens for sale */
     await market.createMarketItem(nftContractAddress, 1, auctionPrice, { value: listingPrice })
     await market.createMarketItem(nftContractAddress, 2, auctionPrice, { value: listingPrice })
+    await market.createMarketItem(nftContractAddress, 3, auctionPrice, { value: listingPrice })
 
 
     /* execute sale of token to another user */
     await market
       .connect(Alice)
       .createMarketSale(nftContractAddress, 1, { value: auctionPrice });
-  });
+
+       // greedy alice buying another token:
+    await market
+    .connect(Alice)
+    .createMarketSale(nftContractAddress, 3, { value: auctionPrice });
+});
+
+
 
   it("Should create and execute market sales", async function () {
 
@@ -274,7 +284,7 @@ describe("NFTMarket regversion", function () {
 
     const balance_Alice = await nft.balanceOf(Alice.address);
     const balance_bob = await nft.balanceOf(Bob.address);
-    expect(balance_Alice.toNumber()).to.equal(1);
+    expect(balance_Alice.toNumber()).to.equal(2);
     expect(balance_bob.toNumber()).to.equal(0);
   });
 
@@ -284,20 +294,40 @@ describe("NFTMarket regversion", function () {
     console.log(Alice.address);
 
     let original = await nft.ownerOf(1);
+    let initialAliceBalance = await nft.balanceOf(Alice.address);
     console.log("🔥 original: ", original === Alice.address);
     console.log(Alice.address);
 
     // let listingPrice = await market.getListingPrice()
     // listingPrice = listingPrice.toString()
+
     await nft.approveTo(Alice.address, 1)
-    await market.connect(Alice).relistMarketItem(nftContractAddress, 1, {
+    // await nft.approveTo(marketAddress, 1)
+    let balance2 = await market.connect(Alice).relistMarketItem(nftContractAddress, 1, {
       value: listingPrice,
     });
+    console.log("Alice initial balance= ",initialAliceBalance, "final balance: ", balance2 )
     // relistMarketItem(
     //   address nftContract,
     //   uint256 itemId,
     // )
     // msg.value == listingPrice
+
+    // new market items should have tokenId 1 in it now!:
+    let current_mkt_items = await market.fetchMarketItems()
+    items = await Promise.all(current_mkt_items.map(async i => {
+      const tokenUri = await nft.tokenURI(i.tokenId)
+      let item = {
+        price: i.price.toString(),
+        tokenId: i.tokenId.toString(),
+        seller: i.seller,
+        owner: i.owner,
+        tokenUri
+      }
+      return item
+    }))
+    console.log('items: ', items)
+
     const balance_Alice = await nft.balanceOf(Alice.address);
     const balance_bob = await nft.balanceOf(Bob.address);
     expect(balance_Alice.toNumber()).to.equal(0);

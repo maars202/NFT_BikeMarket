@@ -87,17 +87,21 @@ contract NFTMarket is ReentrancyGuard {
   function relistMarketItem(
     address nftContract,
     uint256 itemId
-  ) public payable nonReentrant {
+  ) public payable nonReentrant{
     uint price = idToMarketItem[itemId].price;
     uint tokenId = idToMarketItem[itemId].tokenId;
     require(price > 0, "Price must be at least 1 wei");
     require(msg.value == listingPrice, "Price must be equal to listing price");
     
+    
     // IERC721(nftContract).approveTo(payable(address(0)), tokenId);
     // IERC721(nftContract).approveTo(payable(msg.sender), tokenId);
 
     // NFT myNft = NFT(nftContract)
+    // uint balance = IERC721(nftContract).balanceOf(msg.sender);
     IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+    // uint balance2 = IERC721(nftContract).balanceOf(msg.sender);
+    // require(balance - 1 ==  balance2, "Balance of msg.sender should have dropped by 1 after transfer");
 
     idToMarketItem[itemId].owner = payable(address(0));
     idToMarketItem[itemId].sold = false;
@@ -105,6 +109,35 @@ contract NFTMarket is ReentrancyGuard {
     _itemsSold.decrement();
 
   }
+
+
+  //     /* Places an item for sale on the marketplace */
+  // function relistMarketItem(
+  //   address nftContract,
+  //   uint256 itemId
+  // ) public payable nonReentrant returns (uint) {
+  //   uint price = idToMarketItem[itemId].price;
+  //   uint tokenId = idToMarketItem[itemId].tokenId;
+  //   require(price > 0, "Price must be at least 1 wei");
+  //   require(msg.value == listingPrice, "Price must be equal to listing price");
+    
+    
+  //   // IERC721(nftContract).approveTo(payable(address(0)), tokenId);
+  //   // IERC721(nftContract).approveTo(payable(msg.sender), tokenId);
+
+  //   // NFT myNft = NFT(nftContract)
+  //   uint balance = IERC721(nftContract).balanceOf(msg.sender);
+  //   IERC721(nftContract).transferFrom(msg.sender, address(this), tokenId);
+  //   uint balance2 = IERC721(nftContract).balanceOf(msg.sender);
+  //   require(balance - 1 ==  balance2, "Balance of msg.sender should have dropped by 1 after transfer");
+
+  //   idToMarketItem[itemId].owner = payable(address(0));
+  //   idToMarketItem[itemId].sold = false;
+
+  //   _itemsSold.decrement();
+  //   return balance2;
+
+  // }
 
   /* Creates the sale of a marketplace item */
   /* Transfers ownership of the item, as well as funds between parties */
