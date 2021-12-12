@@ -27,6 +27,7 @@ require('dotenv').config();
 require("@nomiclabs/hardhat-ethers");
 // const { API_URL, PRIVATE_KEY } = process.env;
 PRIVATE_KEY = "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+ropsten_private = "84f5fe391f831d332dc278be879519798c6fdf8a706c4330d4d63c3465345115"
 // console.log("PRIVATE_KEY: ", PRIVATE_KEY)
 // console.log("API_URL: ", API_URL)
 module.exports = {
@@ -36,7 +37,7 @@ module.exports = {
       hardhat: {},
       ropsten: {
          url: "https://ropsten.infura.io/v3/1deb3420665347c1962d707496b09284",
-         accounts: [`0x${PRIVATE_KEY}`]
+         accounts: [`0x${ropsten_private}`]
       }
    },
 }
