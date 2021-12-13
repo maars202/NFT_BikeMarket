@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
 import Alert from '@mui/material/Alert';
-import SendIcon from '@mui/icons-material/Send';
-import LoadingButton from '@mui/lab/LoadingButton';
+// import SendIcon from '@mui/icons-material/Send';
+// import LoadingButton from '@mui/lab/LoadingButton';
+
 // import { isNullOrUndefined } from 'util';
 // import { json } from 'stream/consumers';
 // import { Body, Button, Header, Image, Link } from "./";
 //imports needed for this function
 
 import CardPreview from "./Card"
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// import Card from '@mui/material/Card';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
 
 import CircularProgress from '@mui/material/CircularProgress';
 // import { mintNFT } from "../../../scripts/mintnft"
@@ -22,65 +23,70 @@ const axios = require('axios');
 // const fs = require('fs');
 // const fs = require('fs');
 // const FormData = require('form-data');
-function LoadingButtonsTransition() {
-    const [loading, setLoading] = React.useState(false);
-    function handleClick() {
-        setLoading(!loading);
-        setLoading(!loading);
-      }
-      return (  
-        <LoadingButton
-        onClick={handleClick}
-        endIcon={<SendIcon />}
-        loading={loading}
-        loadingPosition="end"
-        variant="contained"
-      >
-        Send
-      </LoadingButton>
-       ) 
-
-}
 
 
+// function LoadingButtonsTransition() {
+//     const [loading, setLoading] = React.useState(false);
+//     function handleClick() {
+//         setLoading(!loading);
+//         setLoading(!loading);
+//       }
+//       return (  
+//         <LoadingButton
+//         onClick={handleClick}
+//         endIcon={<SendIcon />}
+//         loading={loading}
+//         loadingPosition="end"
+//         variant="contained"
+//       >
+//         Send
+//       </LoadingButton>
+//        ) 
 
-function MediaCard(props) {
-    const { name, url } = props
-    return (
-      <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          component="img"
-          height="140"
-          src={url}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Name: {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
-      </Card>
-    );
-  }
+// }
+
+
+
+// function MediaCard(props) {
+//     const { name, url } = props
+//     return (
+//       <Card sx={{ maxWidth: 345 }}>
+//         <CardMedia
+//           component="img"
+//           height="140"
+//           src={url}
+//           alt="green iguana"
+//         />
+//         <CardContent>
+//           <Typography gutterBottom variant="h5" component="div">
+//             Name: {name}
+//           </Typography>
+//           <Typography variant="body2" color="text.secondary">
+//           </Typography>
+//         </CardContent>
+//         <CardActions>
+//           <Button size="small">Share</Button>
+//           <Button size="small">Learn More</Button>
+//         </CardActions>
+//       </Card>
+//     );
+//   }
 
 function FileUploadPage(){
 	const [selectedFile, setSelectedFile] = useState();
 	// const [isFilePicked, setIsFilePicked] = useState(false);
+    // eslint-disable-next-line
     const [isSelected, setIsSelected] = useState(false);
     const [isUploadSuccess, setIsUploadSuccess] = useState(null);
+    // eslint-disable-next-line
     const [isUploadPhotoSuccess, setIsUploadPhotoSuccess] = useState(null);
+    // eslint-disable-next-line
     const [IPFSHashResponse, setIPFSHashResponse] = useState(null)
     const [ipfs, setIPFS] = useState({
             IPFS_image: "None uploaded",
             IPFS_json: "None uploaded"
     })
-    const [preview, setPreview] = useState(true)
+    // const [preview, setPreview] = useState(true)
     const [carddata, setCardData] = useState([{
             img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
             title: 'Breakfast',
@@ -99,7 +105,6 @@ function FileUploadPage(){
 	const handleSubmission = () => {
         setLoading(true)
 		const data = new FormData();
-        const jsondata = new FormData();
 
 		// formData.append('File', selectedFile);
         data.append('file', selectedFile);
@@ -151,7 +156,7 @@ function FileUploadPage(){
         const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
         const pinataApiKey = "909b357f4b9fb06f2c30"
         const pinataSecretApiKey = "56f4e5738dbd426702efbe493d4cce53f778482ede18b39440d045fba1b81e9f"
-        const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
+        // const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
         return axios
         .post(url, data, {
             maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large files
@@ -284,7 +289,7 @@ function FileUploadPage(){
                      }
                  } */}
                  
-                 { isUploadSuccess == true ? 
+                 { isUploadSuccess === true ? 
                      (
                         <div>
                             <Alert severity="success">This is a success alert — check it out!</Alert>

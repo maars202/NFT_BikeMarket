@@ -1,26 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 import Web3 from 'web3'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import Contract from "./components/basic"
-import FileUploader from './components/fileuploader';
 import NFTnumIcon from "./components/NFTiconsnum"
 // import {address, contract_abi} from "./contractconfig"
-import { NFT_ADDRESS, NFT_ABI, NFT_MARKET_ADDRESS, NFT_MARKET_ABI, TODO_LIST_ADDRESS, TODO_LIST_ABI
+import { NFT_ADDRESS, NFT_ABI, NFT_MARKET_ADDRESS, NFT_MARKET_ABI
  } from './contractconfig'
-// function App() {
-//   return (
-//     <div className="App">
-      
-//       <FileUploader />
-//       <Contract />
-//     </div>
-//   );
-// }
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 
 
 import Backdrop from '@mui/material/Backdrop';
@@ -30,22 +17,22 @@ import Button from '@mui/material/Button';
 
 
 import Card from "./components/Card"
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+// import { styled } from '@mui/material/styles';
+// import Paper from '@mui/material/Paper';
 // import Masonry from '@mui/lab/Masonry';
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 
-import { Form, Input, Button as Button2, Radio } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+// import { Form, Input, Button as Button2, Radio } from 'antd';
+// import { InfoCircleOutlined } from '@ant-design/icons';
 
 
 
 // PINATA INFO: 
-const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-const pinataApiKey = "909b357f4b9fb06f2c30"
-const pinataSecretApiKey = "56f4e5738dbd426702efbe493d4cce53f778482ede18b39440d045fba1b81e9f"
-const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
+// const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+// const pinataApiKey = "909b357f4b9fb06f2c30"
+// const pinataSecretApiKey = "56f4e5738dbd426702efbe493d4cce53f778482ede18b39440d045fba1b81e9f"
+// const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
 
 class App extends Component {
   
@@ -273,7 +260,7 @@ class App extends Component {
     console.log("sending from : ", this.state.account)
     let tx
     // this.state.todoList.methods.createTask(content).send({ from: this.state.account })
-    let transaction = await this.state.tokenContract.methods.createToken(url).send({ from: this.state.account })
+    await this.state.tokenContract.methods.createToken(url).send({ from: this.state.account })
     .once('receipt', (receipt) => {
      console.log("token created!: receipt events: ", JSON.stringify(receipt.events))
      tx = receipt.events

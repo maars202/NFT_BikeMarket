@@ -2,7 +2,7 @@
 
 const hre = require("hardhat");
 // const addresses = require("../src/contractconfig");
-const marketaddressdeployed = "0xdaD72C0EBb91ab230aa4De6daE14069506289dCe"
+const marketaddressdeployed = "0xdf970A37CE47a8DE34b176ba5941De31948e8100"
 async function main() {
     // We get the contract to deploy
     const NFTContract = await hre.ethers.getContractFactory("NFT");
