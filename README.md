@@ -3,6 +3,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 Hardhat was used for handling ethereum smart contracts. The smart contracts were inspired by https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb.
 
+Check out an example at https://main.d12layvlh21wx4.amplifyapp.com/. Please use a browser with metamask connected to a ropsten address. 
+
 ## Available Scripts
 
 In the project directory, you can run:
