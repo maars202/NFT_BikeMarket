@@ -68,6 +68,7 @@ class App extends Component {
   async loadBlockchainData() {
     // let web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
 
+        // window web3 detection added:
     const web3 = new Web3(window.web3.currentProvider);
 
 
@@ -79,6 +80,8 @@ class App extends Component {
     //   }else{
     //      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
     //   }
+
+
 
     const accounts = await web3.eth.getAccounts()
     console.log(accounts)
