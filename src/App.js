@@ -66,7 +66,20 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
+    // let web3 = new Web3(Web3.givenProvider || "http://localhost:8545")
+
+    const web3 = new Web3(window.web3.currentProvider);
+
+
+    // let web3
+    // console.log("web3 type: ", typeof(web3), JSON.stringify(web3))
+    // if(typeof web3 == 'undefined'){
+    //   console.log("Using web3 detected from external source like Metamask")
+    //    web3 = new Web3(web3.currentProvider)
+    //   }else{
+    //      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
+    //   }
+
     const accounts = await web3.eth.getAccounts()
     console.log(accounts)
     this.setState({ account: accounts[0] })
