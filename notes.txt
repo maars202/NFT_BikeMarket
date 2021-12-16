@@ -1,0 +1,14 @@
+https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb
+
+
+https://hardhat.org/guides/deploying.html
+npx hardhat node
+npx hardhat run --network <your-network> scripts/deploy.js
+
+
+very useful site for connecting react apps to blockchain ! :
+https://www.dappuniversity.com/articles/blockchain-app-tutorial
+
+
+used pinata uploading files and json functions from here:
+https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft/how-to-mint-a-nft
