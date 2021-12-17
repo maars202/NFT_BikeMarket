@@ -45,16 +45,20 @@ First, connect to the Ropsten Test Network
 <img src="metamask1.png">
 
 Afterwards, connect to the site by clicking on the 3 dots and click the "Connected sites"
+
 <img src="metamask2.png">
 
 Next, click on "Manually connect to current site"
+
 <img src="metamask3.png">
 
 Then, click on "Next" and "Connect"
+
 <img src="metamask4.png">
 <img src="metamask5.png">
 
 Finally, you'll be able to see that the metamask account is connected as indicated by the green light
+
 <img src="metamask6.png">
 
 ### Uploading and minting NFT artwork to place on marketplace:
