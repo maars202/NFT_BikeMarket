@@ -222,7 +222,6 @@ contract NFTMarket is ReentrancyGuard {
     }
     return items;
   }
-<<<<<<< HEAD
 
 
 
@@ -247,6 +246,4 @@ contract NFTMarket is ReentrancyGuard {
     }
     return items;
   }
-=======
->>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
 }
