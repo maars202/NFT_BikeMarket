@@ -50,7 +50,3 @@ You can view the website on your computer and even interact with it by using met
 
 <!-- <img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/> -->
 
-<<<<<<< HEAD
-=======
-# NFT_ArtistsMarket
->>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
