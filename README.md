@@ -11,6 +11,10 @@ In the project directory, install all dependencies by running:
 ```
 npm i
 ```
+Or
+```
+npm install
+```
 To get your own blockchain node running, you can run:
 ```
 npx hardhat node 
