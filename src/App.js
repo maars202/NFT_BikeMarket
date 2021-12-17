@@ -35,8 +35,75 @@ import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 // const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
 
 class App extends Component {
+
+  
   
   componentWillMount() {
+
+    function isMobileDevice() {
+      return 'ontouchstart' in window || 'onmsgesturechange' in window;
+    }
+
+    async function connect(onConnected) {
+      if (!window.ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+    
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+    
+      // onConnected(accounts[0]);
+      this.setState({ account: accounts[0] })
+    }
+
+    function Connect({ setUserAddress }) {
+      if (isMobileDevice()) {
+        console.log("its mobile!")
+        const dappUrl = "metamask-auth.ilamanov.repl.co"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
+        const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+        return (
+          <a href={metamaskAppDeepLink}>
+             <button className={styles.button}>
+               Connect to MetaMask
+             </button>
+          </a>
+        );
+      }
+    
+      return (
+        <button className={styles.button} onClick={() => connect(setUserAddress)}>
+          Connect to MetaMask
+        </button>
+      );
+    }
+    
+    
+    
+async function checkIfWalletIsConnected(onConnected) {
+  if (window.ethereum) {
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+
+    if (accounts.length > 0) {
+      const account = accounts[0];
+      // onConnected(account);
+      this.setState({ account: account})
+      return;
+    }
+
+    if (isMobileDevice()) {
+      await connect(onConnected);
+    }
+  }
+}
+
+//  checkIfWalletIsConnected()
+
+
+
     this.loadBlockchainData()
   }
 
