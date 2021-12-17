@@ -41,6 +41,7 @@ You can view the website on your computer and even interact with it by using met
 
 ### Using the app with metamask 
 First, connect to the Ropsten Test Network
+
 <img src="metamask1.png">
 
 Afterwards, connect to the site by clicking on the 3 dots and click the "Connected sites"
