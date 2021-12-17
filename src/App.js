@@ -23,6 +23,11 @@ import Card from "./components/Card"
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 
+// nftstorage imports: 
+import { NFTStorage, File } from 'nft.storage'
+import { pack } from 'ipfs-car/pack';
+
+
 // import { Form, Input, Button as Button2, Radio } from 'antd';
 // import { InfoCircleOutlined } from '@ant-design/icons';
 
@@ -404,7 +409,7 @@ async function checkIfWalletIsConnected(onConnected) {
     alert(`listing ${JSON.stringify(item)} on market now!`)
   }
 
-  
+
 	handleSubmission = async () => {
     console.log("submitting this state : ", this.state)
     // setLoading(true)
@@ -443,8 +448,8 @@ async function checkIfWalletIsConnected(onConnected) {
     data.append('pinataOptions', pinataOptions);
 
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-    const pinataApiKey = "909b357f4b9fb06f2c30"
-    const pinataSecretApiKey = "56f4e5738dbd426702efbe493d4cce53f778482ede18b39440d045fba1b81e9f"
+    const pinataApiKey = "2c0a435d9fbaa7124806"
+    const pinataSecretApiKey = "678af6175375a4ffe3ed79ba5232190a4bd8ad2689fb24cc47534aec2c6de400"
     const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
     return axios
     .post(url, data, {
@@ -478,26 +483,18 @@ async function checkIfWalletIsConnected(onConnected) {
             .post(jsonurl, sendingJSON, {
                 maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large files
                 headers: {
-                    // 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                     pinata_api_key: pinataApiKey,
                     pinata_secret_api_key: pinataSecretApiKey
                 }
             })
             .then(async (response) => {
                 console.log("successful response JSON: ", JSON.stringify(response.data))
-                // setIsUploadSuccess(true)
-                // setLoading(false)
-                // this.setState({ loading: false })
-                // await mintNFT("https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash)
-                // setIPFS({...ipfs, IPFS_json: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash})
                 return {
                     success: true,
                     pinataUrl: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
                 };
             }).catch(error => {
                 console.log("Errorrr JSON: ", error)
-                // setLoading(false)
-                // this.setState({ loading: false })
                 return {
                     success: false,
                     message: error.message,
@@ -507,8 +504,6 @@ async function checkIfWalletIsConnected(onConnected) {
     .catch(function (error) {
         //handle error 
         console.log("Errorrr: ", error)
-        // this.setState({ loading: false })
-        // setIsUploadSuccess(false)
     });
 };
 
