@@ -3,7 +3,10 @@ import { Box, makeStyles, withStyles, Typography } from "@material-ui/core";
 import { styled } from '@mui/styles';
 import Button from '@mui/material/Button';
 import "./Card.css"
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+>>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
 
 // 2af598
 // 08B3E5
@@ -24,12 +27,18 @@ const Card = (props) => {
   const classes = useStyles();
     const {item, url} = props
     const price = item.price/1000000000000000000
+<<<<<<< HEAD
     console.log("item clicked: ",item.tokenId )
+=======
+>>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
     return(
       <div className="card" style={styles.card}>
             <img src={url} style={styles.cardimg} />
             <div className="card-body" style={styles.cardbody}>
+<<<<<<< HEAD
             <Link to={"/blog/" + item.tokenId}>Find out more!</Link>
+=======
+>>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
             <CustomColor>
                 <h2 style={{color: "orange"}}>{item.name}</h2>
                 </CustomColor>

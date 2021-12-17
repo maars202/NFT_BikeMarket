@@ -81,6 +81,11 @@ class App extends Component {
     //      web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"))
     //   }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
     const accounts = await web3.eth.getAccounts()
     console.log(accounts)
     this.setState({ account: accounts[0] })

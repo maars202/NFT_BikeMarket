@@ -19,10 +19,15 @@
     "axios": "^0.24.0",
     "postcss-safe-parser": "^6.0.0",
     "react": "^17.0.2",
+<<<<<<< HEAD
     "react-card-flip": "^1.1.5",
     "react-dom": "^17.0.2",
     "react-responsive-masonry": "^2.1.4",
     "react-router-dom": "^6.1.1",
+=======
+    "react-dom": "^17.0.2",
+    "react-responsive-masonry": "^2.1.4",
+>>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1",
     "web3": "^1.6.1"
