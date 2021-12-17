@@ -7,7 +7,11 @@ Check out an example at https://main.d12layvlh21wx4.amplifyapp.com/. Please use 
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the project directory, install all dependencies by running:
+```
+npm i
+```
+To get your own blockchain node running, you can run:
 ```
 npx hardhat node 
 ```
