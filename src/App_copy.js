@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 import { ethers } from 'ethers'
 import axios from 'axios'
+import { Link } from "react-router-dom";
 import NFTnumIcon from "./components/NFTiconsnum"
 // import {address, contract_abi} from "./contractconfig"
 import { NFT_ADDRESS, NFT_ABI, NFT_MARKET_ADDRESS, NFT_MARKET_ABI
