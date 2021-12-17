@@ -54,8 +54,8 @@ Next, click on "Manually connect to current site"
 
 Then, click on "Next" and "Connect"
 
-<img src="metamask4.png">
-<img src="metamask5.png">
+<img src="metamask4.png" width="40%" height="40%">
+<img src="metamask5.png" width="40%" height="40%">
 
 Finally, you'll be able to see that the metamask account is connected as indicated by the green light
 
