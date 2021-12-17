@@ -40,7 +40,7 @@ npm start
 You can view the website on your computer and even interact with it by using metamask chrome extension to list your own nfts! Yay!
 
 ### Using the app with metamask 
-First, connect to the Ropsten Test Network
+<h1>First, connect to the Ropsten Test Network</h1>
 <img src="metamask1.png">
 
 Afterwards, connect to the site by clicking on the 3 dots and click the "Connected sites"
