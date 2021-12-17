@@ -23,11 +23,6 @@ import Card from "./components/Card"
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 
-// nftstorage imports: 
-import { NFTStorage, File } from 'nft.storage'
-import { pack } from 'ipfs-car/pack';
-
-
 // import { Form, Input, Button as Button2, Radio } from 'antd';
 // import { InfoCircleOutlined } from '@ant-design/icons';
 
