@@ -63,9 +63,9 @@ Finally, you'll be able to see that the metamask account is connected as indicat
 <img src="metamask6.png">
 
 ### Demo renting bike nft & minting own bike nft for others to rent and use:
-<img src="demo_part1.gif" width="500" height="350"/>
-<img src="demo_part2.gif" width="500" height="350"/>
-<img src="demo_part3.gif" width="500" height="350"/>
+<img src="demo_part1.gif" width="600" height="350"/>
+<img src="demo_part2.gif" width="600" height="350"/>
+<img src="demo_part3.gif" width="600" height="350"/>
 
 <!-- <img src="creatingnft.gif" width="600" height="350"/>
 
