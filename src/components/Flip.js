@@ -7,6 +7,10 @@ import Button from '@mui/material/Button';
 import "./Card.css"
 import { Link } from "react-router-dom";
 import ReactCardFlip from 'react-card-flip';
+import { selectMarketnfts, selectmyNfts } from "../features/marketItemsSlice"
+import { useSelector } from 'react-redux';
+
+import {store} from '../app/store';
 
 
 // import React, { useEffect, useState } from "react";
@@ -18,10 +22,8 @@ import { NFT_ADDRESS, NFT_ABI, NFT_MARKET_ADDRESS, NFT_MARKET_ABI
 } from '../contractconfig'
 
 
-// 2af598
-// 08B3E5
-// 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
 
+// gradient coloring for button:
 const MyButton = styled(Button)({
     background: 'linear-gradient(45deg, #2af598 30%, #08B3E5 90%)',
     border: 0,
@@ -40,11 +42,11 @@ const Card = (props) => {
     // const classes = useStyles();
     //   const {item, url} = props
     const {item, url} = props;
-    console.log("Frontcard props: ", props)
+    // console.log("Frontcard props: ", props)
     //   const item = {"name":"Last supper","description":"Last supper","price":"0.051","tokenId":2,"seller":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","owner":"0x0000000000000000000000000000000000000000","sold":false,"image":"https://gateway.pinata.cloud/ipfs/QmS6nzwktxTw9hkZt9XuREd5Nuu8nwLwHUR7d6b5kDjH42"}
     //   const url = "https://gateway.pinata.cloud/ipfs/QmS6nzwktxTw9hkZt9XuREd5Nuu8nwLwHUR7d6b5kDjH42"
       const price = item.price/1000000000000000000
-      console.log("item clicked: ",item.tokenId )
+      // console.log("item clicked: ",item.tokenId )
       return(
         <div className="card" style={styles.card}>
               <img src={url} style={styles.cardimg} />
@@ -64,6 +66,8 @@ const Card = (props) => {
                     <MyButton>List on Market</MyButton>
                   </div>
                 : <h3 style={styles.unsold}>UnSold!</h3> }
+
+                  <h3>Description: {item.description}</h3>
   
                 
                 </div>
@@ -79,7 +83,7 @@ const BackCard = (props) => {
 
     // const classes = useStyles();
     //   const {item, url} = props
-    console.log("BackCard props: ", props)
+    // console.log("BackCard props: ", props)
     const item = {"name":"Last supper","description":"Last supper","price":"0.051","tokenId":2,"seller":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","owner":"0x0000000000000000000000000000000000000000","sold":false,"image":"https://gateway.pinata.cloud/ipfs/QmS6nzwktxTw9hkZt9XuREd5Nuu8nwLwHUR7d6b5kDjH42"}
       const url = "https://gateway.pinata.cloud/ipfs/QmS6nzwktxTw9hkZt9XuREd5Nuu8nwLwHUR7d6b5kDjH42"
 
@@ -115,65 +119,15 @@ const BackCard = (props) => {
     }
 
 
-const HelloFront = (props) => {
-    return(
-        <div>Helloooo Front</div>
-    )
-    }
-
-    
-
-const HelloBack = (props) => {
-return(
-    <div>Helloooo Back</div>
-)
-}
 
 
-async function itempromisemapping(data, tokenContract){
-
-    const dataitems = await Promise.all(data.map(async (i) => {
-        
-      const tokenUri = await tokenContract.methods.tokenURI(i.tokenId).call()
-
-      const meta = await axios.get(tokenUri)
-      console.log("meta",meta)
-      let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-      let item = {
-        name: meta.data.name, 
-        description: meta.data.name, 
-        price,
-        tokenId: Number(i.tokenId),
-        seller: i.seller,
-        owner: i.owner,
-        sold: i.sold,
-        image: meta.data.image,
-      }
-      return item
-    }))
-    return dataitems
-  }
-
-
-async function loadmarketitems(id) {
-
-    const web3 = new Web3(window.web3.currentProvider);
-
-    const marketContract = new web3.eth.Contract(NFT_MARKET_ABI, NFT_MARKET_ADDRESS)
-    const tokenContract = new web3.eth.Contract(NFT_ABI, NFT_ADDRESS)
-
-
-    const data = await marketContract.methods.fetchMarketItems().call()
-
+async function loadmarketitems(id, marketdata) {
+        // retrieving from common datastore:
+      const data = marketdata
     // getting specific info for only one id:
-    const itemmatch = data.filter(i => i.tokenId === id)
-    console.log("data fetched 2: ", itemmatch)
-    const itemmatchdata = await itempromisemapping(itemmatch, tokenContract)
-    console.log("items collated: ", itemmatchdata)
+    const itemmatch = data.filter(i => Number(i.tokenId) === Number(id))
     /* create a filtered array of items that have been sold */
-
-    
-    return itemmatchdata[0]
+    return itemmatch[0]
 }
 
 
@@ -184,15 +138,17 @@ async function loadmarketitems(id) {
 
 
        const [state, setState] = useState({isFlipped: true})
-       const [data, setData] =  useState({})
+       const [data, setData] =  useState([])
     //    const [state, setState] = useState({})
-       console.log("item received!: ",tokenid )
+    const marketdata = useSelector(selectMarketnfts)
+    const mynftdata = useSelector(selectmyNfts)
+    const alldata = [...marketdata, ...mynftdata]
      
        useEffect(async () => {
          // Fetch post using the postSlug
-         const itemmatchdata = await loadmarketitems(tokenid)
-         setData(itemmatchdata)
-         console.log("this is data to be printed: ", JSON.stringify(data))
+         const itemmatchdata = await loadmarketitems(tokenid, alldata)
+         setData([itemmatchdata])
+        //  console.log("this is data to be printed: ", JSON.stringify(data))
      
      
        }, [tokenid]);
@@ -201,25 +157,43 @@ async function loadmarketitems(id) {
 
 
     function handleClick(e) {
-        console.log("props hereee: ", tokenid)
+        // console.log("props hereee: ", tokenid)
       e.preventDefault();
       setState(prevState => ({ isFlipped: !prevState.isFlipped }));
-      console.log("current flip status: ", state.isFlipped)
+      // console.log("current flip status: ", state.isFlipped)
     }
   
       return (
         <ReactCardFlip isFlipped={state.isFlipped} flipDirection="vertical">
+          {/* front card: */}
           <div>
-            {data.sold ? <BackCard item={data} url={data.image}/> : 
-            <Card item={data} url={data.image}/>}
-            <button onClick={handleClick}>Click to flip</button>
+            <div>
+            {data.map(dataitem => {
+              return dataitem.sold ? 
+              <BackCard item={dataitem} url={dataitem.image}/> : 
+              <Card item={dataitem} url={dataitem.image}/>
+            })}
+            
+            <button onClick={handleClick}>Click to flip front</button>
+            
+            <Link to={"/"}>Back</Link>
+            </div>
+            
           </div>
   
+  {/* back card: */}
           <div>
-          {data.sold ? <BackCard item={data} url={data.image}/> : 
-            <Card item={data} url={data.image}/>}
+          {data.map(dataitem => {
+              return dataitem.sold ? 
+              <BackCard item={dataitem} url={dataitem.image}/> : 
+              <Card item={dataitem} url={dataitem.image}/>
+            })}
             <button onClick={handleClick}>Click to flip</button>
+            
+            <Link to={"/"}>Back</Link>
           </div>
+
+
         </ReactCardFlip>
       )
   }

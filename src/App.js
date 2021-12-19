@@ -1,6 +1,7 @@
 import './App.css';
 import React, { Component } from 'react'
 import Web3 from 'web3'
+
 import { ethers } from 'ethers'
 import axios from 'axios'
 import NFTnumIcon from "./components/NFTiconsnum"
@@ -21,6 +22,8 @@ import Card from "./components/Card"
 // import Paper from '@mui/material/Paper';
 // import Masonry from '@mui/lab/Masonry';
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+import { setMarketNfts, setMyNfts } from './features/marketItemsSlice';
+import { useDispatch, connect } from 'react-redux';
 
 
 // import { Form, Input, Button as Button2, Radio } from 'antd';
@@ -35,6 +38,10 @@ import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 // const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
 
 class App extends Component {
+
+  setMarketNfts() {
+    this.props.setMarketNfts()
+  }
 
   
   
@@ -101,8 +108,6 @@ async function checkIfWalletIsConnected(onConnected) {
 }
 
 //  checkIfWalletIsConnected()
-
-
 
     this.loadBlockchainData()
   }
@@ -177,12 +182,22 @@ async function checkIfWalletIsConnected(onConnected) {
     console.log("fetchingmynfts for account: ", this.state.account)
     const marketitemsdata = await marketContract.methods.fetchMarketItems().call({from: this.state.account})
     const marketitems = await this.itempromisemapping(marketitemsdata)
+
+    // setting data in global store for other components to use too: 
+    this.props.setMarketNfts(marketitems)
+
+    // setting data within this component only:
     this.setState({marketitems: marketitems})
 
 
     console.log("fetchingmynfts for account: ", this.state.account)
     const nftdata = await marketContract.methods.fetchMyNFTs().call({from: this.state.account})
     const mynfts = await this.itempromisemapping(nftdata)
+
+    // setting data in global store for other components to use too: 
+    this.props.setMyNfts(mynfts)
+
+    // setting data within this component only:
     this.setState({mynfts: mynfts})
 
 
@@ -192,29 +207,8 @@ async function checkIfWalletIsConnected(onConnected) {
     console.log("creations: ", creations)
     this.setState({creations: creations})
 
-
-
-
-
-    // setSold(soldItems)
-    // setNfts(items)
-    // setLoadingState('loaded') 
-
-
-    // this.setState({ taskCount })
-    // this.setState({
-    //   tasks:[]
-    // })
-    // for (var i = 1; i <= taskCount; i++) {
-    //   const task = await todoList.methods.tasks(i).call()
-    //   console.log("task: ",task )
-    //   this.setState({
-    //     tasks: [...this.state.tasks, task]
-    //   })
-      
-    // }
-
     this.setState({ loading: false })
+    
     
   }
 
@@ -443,9 +437,9 @@ async function checkIfWalletIsConnected(onConnected) {
     data.append('pinataOptions', pinataOptions);
 
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-    const pinataApiKey = "2c0a435d9fbaa7124806"
-    const pinataSecretApiKey = "678af6175375a4ffe3ed79ba5232190a4bd8ad2689fb24cc47534aec2c6de400"
-    const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwOWIzNTdmNGI5ZmIwNmYyYzMwIiwic2NvcGVkS2V5U2VjcmV0IjoiNTZmNGU1NzM4ZGJkNDI2NzAyZWZiZTQ5M2Q0Y2NlNTNmNzc4NDgyZWRlMThiMzk0NDBkMDQ1ZmJhMWI4MWU5ZiIsImlhdCI6MTYzODg2OTM3N30.wAzeQcFJi1b5iyMtgHsSpjjCLv57PWutdDYhG-yn66o"
+    const pinataApiKey = "d8b71f3cc64cab00c82f"
+    const pinataSecretApiKey = "92f7579133f930a64e4349acfb1049cf3ed0269745e72f806d7900dadeb256d2"
+    const jwt_secret = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIzN2I5YmU4Mi03YWU1LTQ0ZWYtYWU3NS1jOTA5YTZiZTJhODAiLCJlbWFpbCI6Im1hYXJ1bmlwLjIwMjBAc2Npcy5zbXUuZWR1LnNnIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZX0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImQ4YjcxZjNjYzY0Y2FiMDBjODJmIiwic2NvcGVkS2V5U2VjcmV0IjoiOTJmNzU3OTEzM2Y5MzBhNjRlNDM0OWFjZmIxMDQ5Y2YzZWQwMjY5NzQ1ZTcyZjgwNmQ3OTAwZGFkZWIyNTZkMiIsImlhdCI6MTYzOTkzMDg0OH0.Vgk70j6FxpbTO9y44dpjPO2Qf3_CP0G69-jg191ARWo"
     return axios
     .post(url, data, {
         maxBodyLength: 'Infinity', //this is needed to prevent axios from erroring out with large files
@@ -517,7 +511,8 @@ async function checkIfWalletIsConnected(onConnected) {
       </Backdrop>
         <h1>Hello, {this.state.account}!</h1>
         <div style={{display: "flex", justifyContent: "left", alignItems: "center"}}>
-         <NFTnumIcon nftcount={this.state.marketitems.length}/><p>NFTs posted on market:</p>
+         <NFTnumIcon nftcount={this.state.marketitems.length}/><p>Bikes posted on market:</p>
+         {/* NFTs posted on market: */}
         
         </div>
         
@@ -536,7 +531,7 @@ async function checkIfWalletIsConnected(onConnected) {
             console.log(item.tokenId)
             this.buyNFT(item)
           }}>
-        BUY ME!
+        Rent a bicycle!
       </Button>
       </div>
           </div>
@@ -566,14 +561,15 @@ async function checkIfWalletIsConnected(onConnected) {
             console.log(item.tokenId)
             this.buyNFT(item)
           }}>
-        BUY ME!
+        Rent a bicycle!
       </Button>
       
       <Button  variant="contained" color="info" onClick={() => {
             console.log(item.tokenId)
             this.listonmarket(item)
+            alert("Unrenting bike now!")
           }}>
-        Sell
+        Unrent!
       </Button>
       </div>
           </div>
@@ -669,8 +665,25 @@ async function checkIfWalletIsConnected(onConnected) {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    marketNfts: state.marketNfts,
+    mynfts: state.mynfts,
+  }
 
-export default App;
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setMarketNfts: (action) => dispatch(setMarketNfts(action)),
+    setMyNfts: (action) => dispatch(setMyNfts(action))
+  }
+
+}
+// export default App;
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 
 const styles={
