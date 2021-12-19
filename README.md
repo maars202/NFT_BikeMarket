@@ -11,6 +11,10 @@ In the project directory, install all dependencies by running:
 ```
 npm i
 ```
+Or
+```
+npm install
+```
 To get your own blockchain node running, you can run:
 ```
 npx hardhat node 
@@ -35,7 +39,28 @@ npm start
 ```
 You can view the website on your computer and even interact with it by using metamask chrome extension to list your own nfts! Yay!
 
+### Using the app with metamask 
+First, connect to the Ropsten Test Network
 
+<img src="metamask1.png">
+
+Afterwards, connect to the site by clicking on the 3 dots and click the "Connected sites"
+
+<img src="metamask2.png">
+
+Next, click on "Manually connect to current site"
+
+<img src="metamask3.png">
+
+Then, click on "Next" and "Connect"
+<p float="left">
+<img src="metamask4.png" width="40%" height="40%">
+<img src="metamask5.png" width="40%" height="40%">
+</p>
+
+Finally, you'll be able to see that the metamask account is connected as indicated by the green light
+
+<img src="metamask6.png">
 
 ### Uploading and minting NFT artwork to place on marketplace:
 <img src="creatingnft.gif" width="600" height="350"/>
@@ -46,7 +71,3 @@ You can view the website on your computer and even interact with it by using met
 
 <!-- <img src="finalrecording_MOV_SparkVideo.gif" width="600" height="350"/> -->
 
-<<<<<<< HEAD
-=======
-# NFT_ArtistsMarket
->>>>>>> a2f14d2b746258a2456219e191e767afeeaef639
